@@ -1,0 +1,40 @@
+create virtual environment
+
+python -m venv venv
+
+
+
+Folder Structure
+
+# Flask_Auth_App/
+# │
+# ├── app/
+# │   ├── __init__.py        ← app creation
+# │   ├── config.py          ← MySQL config
+# │   ├── extensions.py      ← DB init
+# │   ├── models.py          ← DB models
+# │   └── auth_routes.py          ← APIs / routes
+# │   |       
+# │   └── protected_routes.py          ← APIs / routes
+# │
+# ├── run.py                 ← app start file
+# ├── requirements.txt
+# └── venv/
+
+activate venv---> venv\Scipts\activate
+
+install using this
+pip install -r requirements.txt
+
+
+create tables -----------------
+
+from run import app
+from app.extensions import db
+
+with app.app_context():
+    db.create_all()
+
+
+
+
