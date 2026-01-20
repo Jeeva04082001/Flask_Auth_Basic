@@ -3,3 +3,9 @@ Flask-SQLAlchemy
 PyMySQL
 flask-login
 cryptography
+
+
+
+
+
+

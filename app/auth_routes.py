@@ -97,6 +97,11 @@ def delete_user(id):
 def not_found(e):
     return jsonify({"error": "Route not found"}), 404
 
+@auth_bp.errorhandler(500)
+def server_error(e):
+    return jsonify({"error": "Something went wrong"}), 500
+
+
 
 #Login
 @auth_bp.route("/login",methods=["POST"])
@@ -119,12 +124,39 @@ def logout():
 
 
 
+# ====================== 19-01-2025 ===============================================
+
+import logging
+
+logging.basicConfig(
+    filename="auth_routes.log",
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
+
+logging.info("User API called")
+
+logging.warning("Invalid user id")
+
+logging.error("Database connection failed")
 
 
+# Error handling ensures application stability by gracefully managing failures, 
+# while logging helps track and debug issues by recording system events and errors.
 
+@auth_bp.route("/get_user_id/<int:id>")
+def get_user_id(id):
+    try:
+        user=User.query.get(id)
 
+        if not user:
+            logging.warning(f"User not found {id}")
+            return jsonify({"error":"User not found"}),404
 
-
+        return jsonify({"id":user.id,"email":user.email}) 
+    except Exception as e:
+        logging.error(str(e))
+        return jsonify({"error": "Internal server error"}),500
 
 
 
